@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git(url: 'https://github.com/bindu0900/task.git')
+                git(url: 'https://github.com/bindu0900/task2.git')
             }
         }
         stage('Build Docker Image') {
