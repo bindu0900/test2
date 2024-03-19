@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git(url: 'https://github.com/surya123789/task.git')
+                git(url: 'https://github.com/bindu0900/task.git')
             }
         }
         stage('Build Docker Image') {
@@ -13,7 +13,8 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    docker build -t 586192913683.dkr.ecr.eu-west-1.amazonaws.com/elpdevops:$BUILD_NUMBER .
+                    docker build -t task .
+                    docker tag task:latest 372943597804.dkr.ecr.us-east-1.amazonaws.com/task:latest
                     '''
                 }
             }
@@ -25,9 +26,9 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 586192913683.dkr.ecr.eu-west-1.amazonaws.com
-                    docker push 586192913683.dkr.ecr.eu-west-1.amazonaws.com/elpdevops:$BUILD_NUMBER
-                    '''
+                  aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 372943597804.dkr.ecr.us-east-1.amazonaws.com
+                   docker push 372943597804.dkr.ecr.us-east-1.amazonaws.com/task:latest                
+    '''
                 }
             }
         }
