@@ -1,13 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Clone Repository') {
-            steps {
-                script {
-                    git branch: 'main', url: 'https://github.com/bindu0900/task2.git'
-                }
-            }
-        }
         stage('Build Docker Image') {
             when {
                 expression { currentBuild.result == 'SUCCESS' }
