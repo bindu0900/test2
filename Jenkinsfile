@@ -12,9 +12,6 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-            when {
-                expression { currentBuild.result == 'SUCCESS' }
-            }
             steps {
                 script {
                     sh '''
