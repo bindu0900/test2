@@ -2,9 +2,6 @@ pipeline {
     agent any
     stages {
         stage('Build Docker Image') {
-            when {
-                expression { currentBuild.result == 'SUCCESS' }
-            }
             steps {
                 script {
                     sh '''
