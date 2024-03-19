@@ -3,12 +3,14 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git clone -b main https://github.com/bindu0900/task2.git
+                script {
+                    git branch: 'main', url: 'https://github.com/bindu0900/task2.git'
+                }
             }
         }
         stage('Build Docker Image') {
             when {
-                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+                expression { currentBuild.result == 'SUCCESS' }
             }
             steps {
                 script {
@@ -21,14 +23,14 @@ pipeline {
         }
         stage('Push Docker Image') {
             when {
-                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+                expression { currentBuild.result == 'SUCCESS' }
             }
             steps {
                 script {
                     sh '''
-                  aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 372943597804.dkr.ecr.us-east-1.amazonaws.com
-                   docker push 372943597804.dkr.ecr.us-east-1.amazonaws.com/task:latest                
-    '''
+                    aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 372943597804.dkr.ecr.us-east-1.amazonaws.com
+                    docker push 372943597804.dkr.ecr.us-east-1.amazonaws.com/task:latest
+                    '''
                 }
             }
         }
